@@ -1,7 +1,7 @@
 <div align="center">
 
 <!-- Texto "digitando" - SVG dinâmico, funciona na renderização do GitHub -->
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=30&pause=1000&color=6DD5ED&center=true&vCenter=true&width=700&lines=Deep+Learning;Prof.+Sandro+da+Silva+Camargo;Python+%2B+Redes+Neurais+%F0%9F%A7%A0;Aprendizagem+Profunda+na+Pr%C3%A1tica" alt="Typing SVG" />
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=30&pause=1000&color=6DD5ED&center=true&vCenter=true&width=700&lines=Deep+Learning;Eduardo+Munhoz+umpierre;Python+%2B+Redes+Neurais+%F0%9F%A7%A0;Aprendizagem+Profunda+na+Pr%C3%A1tica" alt="Typing SVG" />
 
 <br>
 
