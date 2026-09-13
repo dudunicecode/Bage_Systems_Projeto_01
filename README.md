@@ -15,8 +15,8 @@
 
 ## 📘 Sobre o repositório
 
-Este repositório reúne os notebooks da disciplina de **Deep Learning**, do professor
-**Sandro da Silva Camargo** ([sandrocamargo@unipampa.edu.br](mailto:sandrocamargo@unipampa.edu.br)),
+Este repositório reúne os dados do projeto 01 da cadeira **Projeto Integrador I**, Integrantes do grupo
+**BAGÉ SYSTEMS** ([Eduardo Munhoz Umpierre](mailto:Brian, Pedro)),
 cobrindo desde fundamentos de Python até arquiteturas de classificação e autoencoders.
 
 Todos os notebooks abrem direto no Google Colab — basta clicar no ícone ao lado de cada um.
