@@ -213,6 +213,26 @@
   .readout .o{ color:var(--ubuntu); font-weight:700; }
   .readout .k{ color:var(--kali); font-weight:700; }
 
+  /* ================= APPS grid (VS Code / Nmap / Firefox) ================= */
+  .apps-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:32px; }
+  @media (max-width:900px){ .apps-grid{ grid-template-columns:1fr; } }
+  .app-card .win-head{ justify-content:space-between; }
+  .app-card .win-head .badge{ font-size:10.5px; padding:2px 8px; border-radius:20px; border:var(--edge); color:var(--muted); }
+  .metric-row{ display:flex; justify-content:space-between; font-family:var(--mono); font-size:12.5px; padding:7px 0; border-bottom:1px dashed var(--border-soft); }
+  .metric-row:last-child{ border-bottom:none; }
+  .metric-row .k-lab{ color:var(--muted); }
+  .metric-row .vo{ color:var(--ubuntu); font-weight:700; }
+  .metric-row .vk{ color:var(--kali); font-weight:700; }
+  .ram-note{ margin-top:10px; font-family:var(--mono); font-size:11.5px; color:var(--muted-2); }
+
+  /* ================= C CODE block ================= */
+  .code-block{ margin-top:28px; }
+  .code-block pre{ margin:0; padding:18px 20px; font-family:var(--mono); font-size:12.5px; line-height:1.65; color:var(--mint); overflow-x:auto; }
+  .code-block .kw{ color:var(--kali); }
+  .code-block .fn{ color:var(--ubuntu); }
+  .code-block .str{ color:var(--warn); }
+  .code-block .cm{ color:var(--muted-2); font-style:italic; }
+
   /* ================= SINTESE verdict windows ================= */
   .verdicts{ display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:44px; }
   @media (max-width:820px){ .verdicts{ grid-template-columns:1fr; } }
@@ -292,7 +312,7 @@
     <span>sysbench + htop</span>
   </div>
   <h1><span class="o">Ubuntu 26.04.1</span><span class="vs">vs</span><span class="k">Kali Linux 2026.2</span></h1>
-  <p class="sub">Duas distribuições Debian, dois propósitos opostos. Este relatório compara instalação, consumo de recursos e desempenho de CPU/memória em máquinas virtuais configuradas com hardware idêntico.</p>
+  <p class="sub">Duas distribuições Debian, dois propósitos opostos. Este relatório compara instalação, consumo de recursos, desempenho de CPU/memória e aplicações reais em máquinas virtuais configuradas com hardware idêntico.</p>
   <div class="cli">root@bagé:~$ role o mouse ou pressione ↓ para navegar<span class="cursor"></span></div>
   <div class="scrolldown"><span class="chev">↓</span><span>scroll</span></div>
 </section>
@@ -320,7 +340,7 @@
   <div class="win objective fade-el">
     <div class="win-head"><div class="tty"><span></span><span></span><span></span></div> man objetivo</div>
     <div class="win-body">
-      <span class="k">OBJETIVO</span><span>Comparar características de instalação e consumo de recursos entre as duas distribuições, observando CPU e memória em condições de hardware idênticas.</span>
+      <span class="k">OBJETIVO</span><span>Comparar características de instalação, consumo de recursos e desempenho de aplicações reais entre as duas distribuições, observando CPU, memória e tempos de resposta em condições de hardware idênticas.</span>
       <span class="k">MÉTODO</span><span>VMs com os mesmos limites de RAM, processador e armazenamento no VMware Workstation — reduzindo interferência do hardware físico na comparação.</span>
     </div>
   </div>
@@ -342,7 +362,7 @@
     </div></div>
     <div class="win b3 tool-card fade-el"><div class="win-body">
       <div class="icon o">◈</div>
-      <div><h4>htop</h4><p>Visualizador interativo de processos — usado aqui para observar o consumo de RAM em condição ociosa.</p></div>
+      <div><h4>htop</h4><p>Visualizador interativo de processos — usado aqui para observar o consumo de RAM e CPU em condição ociosa e durante o uso de aplicações.</p></div>
     </div></div>
     <div class="win b4 tool-card fade-el"><div class="win-body">
       <div class="icon k">▤</div>
@@ -472,6 +492,87 @@
   <div class="pageno">~/memoria</div>
 </section>
 
+<!-- ============ APPS (VS Code / Nmap / Firefox) ============ -->
+<section id="apps" class="glow-plain">
+  <div class="eyebrow"><span class="px">$</span> time code &amp;&amp; time nmap 127.0.0.1 &amp;&amp; time firefox <span class="kicker-line"></span></div>
+  <h2 class="sec-title">Aplicações multiplataforma em uso real</h2>
+  <p class="sec-sub">Complementando os benchmarks sintéticos, medimos o tempo de inicialização/execução (<code>time</code>) e o consumo de CPU/RAM (<code>htop</code>) de três ferramentas usadas nas duas distribuições: Visual Studio Code, Nmap e Firefox.</p>
+  <div class="apps-grid">
+    <div class="win app-card fade-el">
+      <div class="win-head"><div class="tty"><span></span><span></span><span></span></div> time code <span class="badge">VS Code</span></div>
+      <div class="win-body">
+        <div class="metric-row"><span class="k-lab">real</span><span class="vo">1,351s</span><span class="vk">0,09s</span></div>
+        <div class="metric-row"><span class="k-lab">user</span><span class="vo">0,085s</span><span class="vk">0,06s</span></div>
+        <div class="metric-row"><span class="k-lab">sys</span><span class="vo">2,150s</span><span class="vk">0,04s</span></div>
+        <div class="metric-row"><span class="k-lab">CPU (htop)</span><span class="vo">0,0–0,7%</span><span class="vk">0,0–0,7%</span></div>
+        <div class="metric-row"><span class="k-lab">RAM (htop)</span><span class="vo">2,7%</span><span class="vk">3,4%</span></div>
+        <p class="ram-note">tempo real variou bastante — possível influência do processo do editor já ativo em segundo plano (arquitetura cliente-servidor do comando <code>code</code>).</p>
+      </div>
+    </div>
+    <div class="win app-card fade-el">
+      <div class="win-head"><div class="tty"><span></span><span></span><span></span></div> time nmap 127.0.0.1 <span class="badge">Nmap</span></div>
+      <div class="win-body">
+        <div class="metric-row"><span class="k-lab">real</span><span class="vo">0,068s</span><span class="vk">0,13s</span></div>
+        <div class="metric-row"><span class="k-lab">user</span><span class="vo">0,029s</span><span class="vk">0,02s</span></div>
+        <div class="metric-row"><span class="k-lab">sys</span><span class="vo">0,038s</span><span class="vk">0,02s</span></div>
+        <p class="ram-note">varredura muito curta contra o host local — diferença de décimos de segundo, pouco significativa.</p>
+      </div>
+    </div>
+    <div class="win app-card fade-el">
+      <div class="win-head"><div class="tty"><span></span><span></span><span></span></div> time firefox about:blank <span class="badge">Firefox</span></div>
+      <div class="win-body">
+        <div class="metric-row"><span class="k-lab">real</span><span class="vo">3,597s</span><span class="vk">3,31s</span></div>
+        <div class="metric-row"><span class="k-lab">user</span><span class="vo">1,790s</span><span class="vk">2,27s</span></div>
+        <div class="metric-row"><span class="k-lab">sys</span><span class="vo">2,116s</span><span class="vk">1,92s</span></div>
+        <div class="metric-row"><span class="k-lab">CPU (htop)</span><span class="vo">0,0–0,7%</span><span class="vk">0,0–1,3%</span></div>
+        <div class="metric-row"><span class="k-lab">RAM (htop)</span><span class="vo">6,6%</span><span class="vk">4,1%</span></div>
+        <p class="ram-note">janela vazia (about:blank) — tempos de abertura próximos entre as distribuições.</p>
+      </div>
+    </div>
+  </div>
+  <p class="sec-sub" style="margin-top:22px;">VLC Media Player e Snap ainda não possuem dados quantitativos registrados nesta versão do relatório.</p>
+  <div class="pageno">~/apps</div>
+</section>
+
+<!-- ============ PROGRAMA EM C ============ -->
+<section id="programa-c" class="glow-ubuntu">
+  <div class="eyebrow"><span class="px">$</span> gcc programa.c -o programa &amp;&amp; time ./programa <span class="kicker-line"></span></div>
+  <h2 class="sec-title">Compilação e execução em C</h2>
+  <p class="sec-sub">Programa em C compilado com o GCC e cronometrado com <code>time</code> nas duas distribuições: percorre o intervalo de 500 a 1500 e imprime os valores que, divididos por 7, deixam resto igual a 3.</p>
+  <div class="win code-block fade-el">
+    <div class="win-head"><div class="tty"><span></span><span></span><span></span></div> programa.c</div>
+    <pre><span class="kw">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+<span class="kw">int</span> <span class="fn">main</span>()
+{
+    <span class="fn">printf</span>(<span class="str">"Numeros entre 500 e 1500 que divididos por 7 deixam resto igual a 3:"</span>);
+    <span class="kw">for</span>(<span class="kw">int</span> i=500;i&lt;=1500;i++){
+        <span class="kw">if</span>(i%7==3){
+            <span class="fn">printf</span>(<span class="str">"\n%d"</span>, i);
+        }
+    }
+    <span class="kw">return</span> 0;
+}</pre>
+  </div>
+  <div class="two-col-result">
+    <div class="bars" style="margin-top:0;">
+      <div class="bar-item">
+        <div class="bar-top"><span>Compilação — Ubuntu</span><span>segundos</span></div>
+        <div class="bar-track"><div class="bar-fill o" data-target="43.6" data-value="0.048"><span class="val" data-count="0.048" data-decimals="3" data-suffix="s"></span></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-top"><span>Compilação — Kali</span><span>segundos</span></div>
+        <div class="bar-track"><div class="bar-fill k" data-target="100" data-value="0.11"><span class="val" data-count="0.11" data-decimals="3" data-suffix="s"></span></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="diff-stat"><span class="num">0,062s</span><span class="lab">de diferença<br/>a favor do Ubuntu na compilação</span></div>
+      <p class="readout" style="margin-top:18px;">execução do binário (real)<br/><b class="o">0,003s</b> — ubuntu<br/><b class="k">0,00s</b> — kali</p>
+    </div>
+  </div>
+  <p class="sec-sub" style="margin-top:26px;">O programa é simples (um laço com uma operação de módulo), então o tempo de execução é dominado pela sobrecarga de carregamento do processo pelo sistema operacional, não pela complexidade do algoritmo. Execução única por cenário.</p>
+  <div class="pageno">~/programa-c</div>
+</section>
+
 <!-- ============ SINTESE ============ -->
 <section id="sintese" class="glow-plain">
   <div class="eyebrow"><span class="px">$</span> git diff --stat veredito <span class="kicker-line"></span></div>
@@ -482,7 +583,7 @@
       <ul class="verdict-list">
         <li><span class="m o">+</span>Menor espaço em disco: 8,6 GB</li>
         <li><span class="m o">+</span>Experiência desktop ampla (GNOME)</li>
-        <li><span class="m o">+</span>Boa base para uso pessoal, dev e corporativo</li>
+        <li><span class="m o">+</span>Compilação do programa em C mais rápida (0,048s)</li>
         <li><span class="m o">−</span>Levemente atrás nos testes sintéticos</li>
       </ul>
     </div>
@@ -496,7 +597,7 @@
       </ul>
     </div>
   </div>
-  <p class="sec-sub" style="margin-top:26px;">A finalidade de uso pesa mais do que poucos pontos percentuais de benchmark: uso geral (Ubuntu) versus segurança da informação (Kali).</p>
+  <p class="sec-sub" style="margin-top:26px;">A finalidade de uso pesa mais do que poucos pontos percentuais de benchmark: uso geral (Ubuntu) versus segurança da informação (Kali). Nas aplicações reais, Nmap e Firefox tiveram tempos próximos; o VS Code exige nova medição em condições controladas.</p>
   <div class="pageno">~/sintese</div>
 </section>
 
@@ -510,7 +611,8 @@
       <div class="row"><span class="ts">[ 12.044812]</span><span class="tag2">WARN</span><span class="msg">execução única por cenário — sem repetições, não é possível estimar variabilidade estatística.</span></div>
       <div class="row"><span class="ts">[ 12.098233]</span><span class="tag2">WARN</span><span class="msg">hardware físico do hospedeiro não registrado (CPU, RAM total, versão do VMware/sysbench).</span></div>
       <div class="row"><span class="ts">[ 12.151090]</span><span class="tag2">WARN</span><span class="msg">ambientes gráficos distintos (GNOME vs XFCE) podem afetar a RAM ociosa medida.</span></div>
-      <div class="row"><span class="ts">[ 12.203441]</span><span class="tag2">WARN</span><span class="msg">escopo do benchmark não cobre I/O de disco, rede, boot ou aplicações reais.</span></div>
+      <div class="row"><span class="ts">[ 12.203441]</span><span class="tag2">WARN</span><span class="msg">tempo do VS Code pode refletir estado prévio do processo, não desempenho puro do sistema.</span></div>
+      <div class="row"><span class="ts">[ 12.255120]</span><span class="tag2">WARN</span><span class="msg">VLC Media Player e Snap ainda sem dados quantitativos registrados.</span></div>
     </div>
   </div>
   <div class="pageno">~/limitacoes</div>
@@ -518,12 +620,14 @@
 
 <!-- ============ CONCLUSAO ============ -->
 <section id="conclusao" class="glow-dual">
-  <div class="eyebrow"><span class="px">$</span> git log --oneline -4 <span class="kicker-line"></span></div>
+  <div class="eyebrow"><span class="px">$</span> git log --oneline -6 <span class="kicker-line"></span></div>
   <h2 class="sec-title">Considerações finais</h2>
   <div class="gitlog">
     <div class="commit"><span class="hash">a1f92c3</span> <span class="meta">relatorio@vm-lab · resultados de cpu</span><div class="msg">Kali venceu por ~1,87% em eventos de CPU/s — diferença pequena.</div></div>
     <div class="commit"><span class="hash">7e0b481</span> <span class="meta">relatorio@vm-lab · resultados de memória</span><div class="msg">Kali venceu por ~1,82% em taxa de transferência — mesma ordem de grandeza.</div></div>
     <div class="commit"><span class="hash">3cd6a90</span> <span class="meta">relatorio@vm-lab · armazenamento & ram</span><div class="msg">Ubuntu ocupou bem menos disco; Kali consumiu menos RAM ociosa.</div></div>
+    <div class="commit"><span class="hash">9b4a2f1</span> <span class="meta">relatorio@vm-lab · apps multiplataforma</span><div class="msg">Nmap e Firefox com tempos próximos; VS Code exige reteste controlado.</div></div>
+    <div class="commit"><span class="hash">c2e7d05</span> <span class="meta">relatorio@vm-lab · programa em c</span><div class="msg">Ubuntu compilou mais rápido (0,048s vs 0,11s); execução em poucos ms em ambos.</div></div>
     <div class="commit"><span class="hash">f4412de</span> <span class="meta">relatorio@vm-lab · veredito</span><div class="msg">Propósito de uso pesa mais do que pontos percentuais de benchmark.</div></div>
   </div>
   <div class="shutdown">root@relatorio:~$ shutdown -h now<br/><span class="dim">Broadcast: nenhuma distribuição é universalmente superior — a escolha depende do propósito de uso.</span></div>
@@ -568,11 +672,11 @@
 
   // nav dock
   var sections = Array.prototype.slice.call(document.querySelectorAll('section'));
-  var labels = ['~/','~/intro','~/fundamentos','~/setup','~/resultados','~/cpu','~/memoria','~/sintese','~/limites','~/final','man refs'];
+  var labels = ['~/','~/intro','~/fundamentos','~/setup','~/resultados','~/cpu','~/memoria','~/apps','~/prog-c','~/sintese','~/limites','~/final','man refs'];
   var dock = document.getElementById('navdock');
   sections.forEach(function(sec,i){
     var btn = document.createElement('button');
-    btn.innerHTML = '<span class="lbl">'+labels[i]+'</span><span class="dot"></span>';
+    btn.innerHTML = '<span class="lbl">'+(labels[i] || ('~/sec'+i))+'</span><span class="dot"></span>';
     btn.addEventListener('click', function(){ sec.scrollIntoView({behavior: reduced?'auto':'smooth'}); });
     btn.dataset.target = sec.id;
     dock.appendChild(btn);
